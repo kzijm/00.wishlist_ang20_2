@@ -1,0 +1,11 @@
+<div class="col-sm-2">
+  <select
+    class="form-select"
+    [ngModel]="listFilter()"
+    (ngModelChange)="filterChanged($event)"
+  >
+    @for ( enum of filters; track $index) {
+    <option value="{{ enum }}">{{ enum }}</option>
+    }
+  </select>
+</div>
