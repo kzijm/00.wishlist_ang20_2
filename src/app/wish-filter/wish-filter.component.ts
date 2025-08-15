@@ -1,5 +1,7 @@
-import { Component, Output, EventEmitter, input } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { ListFilter } from '../shared/filters';
+import { WishStateSignalService } from '../wish-state-signal.service';
+import { WishStateService } from '../wish-state.service';
 
 @Component({
   selector: 'app-wish-filter',
@@ -8,13 +10,19 @@ import { ListFilter } from '../shared/filters';
   styleUrl: './wish-filter.component.scss',
 })
 export class WishFilterComponent {
-  @Output() changeFilter = new EventEmitter();
-
   filters = Object.values(ListFilter);
+  listFilter: Signal<ListFilter>;
 
-  listFilter = input.required<ListFilter>();
+  constructor(
+    private wishStateService: WishStateService,
+    private wishStateSignalService: WishStateSignalService
+  ) {
+    this.wishStateSignalService.setFilter(ListFilter.All);
+    this.listFilter = this.wishStateSignalService.select('listFilter');
+  }
 
   filterChanged(value: ListFilter) {
-    this.changeFilter.emit(value);
+    this.wishStateSignalService.set('listFilter', value);
+    this.wishStateService.set('listFilter', value);
   }
 }

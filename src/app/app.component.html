@@ -1,39 +1,13 @@
 <div class="container">
   <div class="row mt-3">
-    <app-add-wish (addWish)="addNewWish($event)" />
+    <app-add-wish />
   </div>
 
   <div class="row mt-3">
-    <app-wish-filter
-      [listFilter]="listFilter()"
-      (changeFilter)="filterChanged($event)"
-    />
+    <app-wish-filter />
   </div>
 
   <div class="row mt-3">
-    <app-wish-list
-      [items]="items()"
-      [filter]="listFilter()"
-      (toggleCheckbox)="toggleItem($event)"
-    />
+    <app-wish-list />
   </div>
-
-  <!-- signal samples -->
-  <!-- <div class="row mt-3">
-    <div class="d-inline-flex gap-3">
-      <button type="button" class="btn btn-primary" (click)="increment()">
-        Increment
-      </button>
-      <button type="button" class="btn btn-primary" (click)="multiplier = 10">
-        Set multiplier to 10
-      </button>
-      <button type="button" class="btn btn-primary" (click)="addItem()">
-        add item
-      </button>
-      <button type="button" class="btn btn-primary" (click)="setFoo()">
-        set foo
-      </button>
-      {{ baz() }};
-    </div>
-  </div> -->
 </div>

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { EventBusService } from '../shared/services/event-bus.service';
+import { WishStateSignalService } from '../wish-state-signal.service';
+import { WishItem } from '../shared/models/wishItem';
+import { WishStateService } from '../wish-state.service';
 
 @Component({
   selector: 'app-wish-list-item',
@@ -8,37 +10,31 @@ import { EventBusService } from '../shared/services/event-bus.service';
   styleUrl: './wish-list-item.component.scss',
 })
 export class WishListItemComponent implements OnInit {
-  @Input() wishText!: string;
-
-  @Input() fullfilled!: boolean;
-  @Output() fullfilledChange = new EventEmitter<boolean>();
+  @Input() item!: WishItem;
 
   get cssClasses() {
-    //return this.fullfilled ? ['strikeout','text-muted'] : [];
-    console.log('getter');
-    return { 'text-decoration-line-through text-muted': this.fullfilled };
+    // console.log('getter');
+    return { 'text-decoration-line-through text-muted': this.item.isComplete };
   }
-  constructor(private eventBus: EventBusService) {
-    // this.eventBus
-    //   .on$<undefined>('randomToast')
-    //   .pipe(takeUntilDestroyed())
-    //   .subscribe(() => {});
-  }
+  constructor(
+    private wishStateService: WishStateService,
+    private wishStateSignalService: WishStateSignalService
+  ) {}
 
   ngOnInit(): void {}
 
   removeWish() {
-    //events.emit('removeWish', this.wishText);
+    console.log('remove wish', this.item.wishText);
+    const wishText = this.item.wishText;
+    //this.remove.emit(this.item);
+    this.wishStateSignalService.removeItem(wishText);
+    this.wishStateService.removeItem(wishText);
   }
 
+  // See removeWish() when handling 2 or more  stores.
   toggleFullfilled() {
-    this.fullfilled = !this.fullfilled;
-    this.fullfilledChange.emit(this.fullfilled);
+    const wishText = this.item.wishText;
+    this.wishStateSignalService.toggleItem(this.item);
+    this.wishStateService.toggleItem(this.item);
   }
-}
-function takeUntilDestroyed(): import('rxjs').OperatorFunction<
-  undefined,
-  unknown
-> {
-  throw new Error('Function not implemented.');
 }

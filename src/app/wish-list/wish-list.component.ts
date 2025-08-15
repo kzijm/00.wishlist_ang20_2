@@ -1,12 +1,10 @@
-import {
-  Component,
-  computed,
-  Output,
-  EventEmitter,
-  input,
-} from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { WishItem } from '../shared/models/wishItem';
 import { ListFilter } from '../shared/filters';
+import { WishStateSignalService } from '../wish-state-signal.service';
+import { WishStateService } from '../wish-state.service';
+import { map, Observable, switchMap, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-wish-list',
@@ -15,25 +13,42 @@ import { ListFilter } from '../shared/filters';
   styleUrl: './wish-list.component.scss',
 })
 export class WishListComponent {
-  @Output() toggleCheckbox = new EventEmitter<WishItem>();
-
-  // converted to signals
-  items = input<WishItem[]>([]);
-  filter = input.required<string>();
-
   // computed from signals
-  visibleItems = computed<WishItem[]>(() => {
-    const listFilter = this.filter();
-    if (listFilter === ListFilter.All) {
-      return this.items();
-    } else if (listFilter === ListFilter.UnfulFilled) {
-      return this.items().filter((item) => !item.isComplete);
+  visibleSignalItems = computed<WishItem[]>(() => {
+    console.log('computed visible');
+    const listFilter = this.wishStateSignalService.select('listFilter');
+    const items = this.wishStateSignalService.select('items');
+    if (listFilter() === ListFilter.All) {
+      return items();
+    } else if (listFilter() === ListFilter.UnfulFilled) {
+      return items().filter((item) => !item.isComplete);
     } else {
-      return this.items().filter((item) => item.isComplete);
+      return items().filter((item) => item.isComplete);
     }
   });
 
-  toggleItem(item: WishItem) {
-    this.toggleCheckbox.emit(item);
+  visibleItems!: WishItem[];
+  constructor(
+    private wishStateService: WishStateService,
+    private wishStateSignalService: WishStateSignalService
+  ) {
+    // this.visibleItems from observables
+    this.wishStateService
+      .getVisibleItems()
+      .pipe(
+        takeUntilDestroyed(),
+        tap((items) => console.log('visible items', items))
+      )
+      .subscribe((items) => (this.visibleItems = items));
+  }
+
+  // removeWish(item: WishItem) {
+  //   console.log('remove wish', item.wishText);
+  //   this.wishStateSignalService.removeItem(item);
+  //   this.wishStateService.removeItem(item);
+  // }
+  toggleFullfilled(item: WishItem) {
+    this.wishStateSignalService.toggleItem(item);
+    this.wishStateService.toggleItem(item);
   }
 }
