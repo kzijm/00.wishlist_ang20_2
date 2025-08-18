@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WishStateService } from '../wish-state.service';
 import { WishStateSignalService } from '../wish-state-signal.service';
 import { WishItem } from '../shared/models/wishItem';
@@ -10,6 +10,7 @@ import { WishItem } from '../shared/models/wishItem';
   styleUrl: './add-wish.component.scss',
 })
 export class AddWishComponent {
+  @Input() type: 'signal' | 'observable' = 'signal';
   @Output() addWish = new EventEmitter();
 
   newWishText: string = '';
@@ -24,8 +25,11 @@ export class AddWishComponent {
       return; // Prevent adding empty wishes
     }
 
-    this.wishStateSignalService.addItem(new WishItem(this.newWishText));
-    this.wishStateService.addItem(new WishItem(this.newWishText));
+    if (this.type === 'signal') {
+      this.wishStateSignalService.addItem(new WishItem(this.newWishText));
+    } else {
+      this.wishStateService.addItem(new WishItem(this.newWishText));
+    }
     this.newWishText = '';
   }
 }

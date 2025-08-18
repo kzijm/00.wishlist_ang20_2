@@ -1,13 +1,28 @@
 <div class="container">
-  <div class="row mt-3">
-    <app-add-wish />
-  </div>
+  <div class="row justify-content-center mt-4 gx-3 gx-lg-5">
+    <div class="col-12 col-sm-6">
+      <h2 class="col">Signal Version</h2>
+      <app-add-wish type="signal" />
 
-  <div class="row mt-3">
-    <app-wish-filter />
-  </div>
+      <div class="row mt-5">
+        <app-wish-filter class="ms-auto col-auto" type="signal" />
+      </div>
 
-  <div class="row mt-3">
-    <app-wish-list />
+      <div class="row mt-4">
+        <app-wish-list type="signal" />
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6">
+      <h2 class="col">Observable Version</h2>
+      <app-add-wish type="observable" />
+      <div class="row mt-5">
+        <app-wish-filter class="ms-auto col-auto" type="observable" />
+      </div>
+
+      <div class="row mt-4">
+        <app-wish-list type="observable" />
+      </div>
+    </div>
   </div>
 </div>

@@ -1,11 +1,23 @@
-<div class="col-sm-2">
-  <select
-    class="form-select"
-    [ngModel]="listFilter()"
-    (ngModelChange)="filterChanged($event)"
-  >
-    @for ( enum of filters; track $index) {
-    <option value="{{ enum }}">{{ enum }}</option>
-    }
-  </select>
+<div class="">
+  @if (type === "signal") {
+    <select
+      class="form-select"
+      [ngModel]="listFilterSignal()"
+      (ngModelChange)="filterChanged($event)"
+    >
+      @for (enum of filters; track $index) {
+        <option value="{{ enum }}">{{ enum }}</option>
+      }
+    </select>
+  } @else {
+    <select
+      class="form-select"
+      [ngModel]="listFilter$ | async"
+      (ngModelChange)="filterChanged($event)"
+    >
+      @for (enum of filters; track $index) {
+        <option value="{{ enum }}">{{ enum }}</option>
+      }
+    </select>
+  }
 </div>

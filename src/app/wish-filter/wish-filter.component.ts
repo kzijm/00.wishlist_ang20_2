@@ -1,7 +1,8 @@
-import { Component, Signal } from '@angular/core';
+import { Component, Input, Signal } from '@angular/core';
 import { ListFilter } from '../shared/filters';
 import { WishStateSignalService } from '../wish-state-signal.service';
 import { WishStateService } from '../wish-state.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-wish-filter',
@@ -10,19 +11,30 @@ import { WishStateService } from '../wish-state.service';
   styleUrl: './wish-filter.component.scss',
 })
 export class WishFilterComponent {
+  @Input() type: 'signal' | 'observable' = 'signal';
+
   filters = Object.values(ListFilter);
-  listFilter: Signal<ListFilter>;
+  listFilterSignal: Signal<ListFilter>;
+  listFilter$: Observable<ListFilter>;
 
   constructor(
     private wishStateService: WishStateService,
-    private wishStateSignalService: WishStateSignalService
+    private wishStateSignalService: WishStateSignalService,
   ) {
     this.wishStateSignalService.setFilter(ListFilter.All);
-    this.listFilter = this.wishStateSignalService.select('listFilter');
+    this.wishStateService.setFilter(ListFilter.All);
+    this.listFilterSignal = this.wishStateSignalService.select('listFilter');
+    this.listFilter$ = this.wishStateService.select('listFilter');
   }
 
+  // filterSignalChanged(value: ListFilter) {
+  //   this.wishStateSignalService.set('listFilter', value);
+  // }
   filterChanged(value: ListFilter) {
-    this.wishStateSignalService.set('listFilter', value);
-    this.wishStateService.set('listFilter', value);
+    if (this.type === 'signal') {
+      this.wishStateSignalService.set('listFilter', value);
+    } else {
+      this.wishStateService.set('listFilter', value);
+    }
   }
 }

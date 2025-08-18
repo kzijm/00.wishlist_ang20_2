@@ -1,37 +1,23 @@
-<h2>Observable Version</h2>
-<!-- <div *ngIf="visibleItems.length === 0; else showItems">
-  There are no wishes to display.
-</div> -->
-
-@if(visibleItems.length > 0) {
-<ul class="wish-list">
-  @for (wish of visibleItems; track wish.wishText) {
-  <app-wish-list-item [item]="wish"></app-wish-list-item>
+@if (type === "signal") {
+  @if (visibleSignalItems().length > 0) {
+    <ul class="wish-list ps-0">
+      @for (wish of visibleSignalItems(); track wish.wishText) {
+        <app-wish-list-item [item]="wish" [type]="type"></app-wish-list-item>
+      }
+    </ul>
+  } @else {
+    <div>There are no wishes to display.</div>
   }
-</ul>
-} @else {
-<div>There are no wishes to display.</div>
 }
 
-<h2>Signal Version</h2>
-<!-- <div *ngIf="VisibleSignalItems().length === 0; else showSignalItems">
-  There are no wishes to display.
-</div> -->
-
-@if(visibleSignalItems().length > 0) {
-<ul class="wish-list">
-  @for (wish of visibleSignalItems(); track wish.wishText) {
-  <app-wish-list-item [item]="wish"></app-wish-list-item>
+@if (type === "observable") {
+  @if (visibleItems.length > 0) {
+    <ul class="wish-list ps-0">
+      @for (wish of visibleItems; track wish.wishText) {
+        <app-wish-list-item [item]="wish" [type]="type"></app-wish-list-item>
+      }
+    </ul>
+  } @else {
+    <div>There are no wishes to display.</div>
   }
-</ul>
-} @else {
-<div>There are no wishes to display.</div>
 }
-
-<!-- <ng-template #showSignalItems>
-  <ul class="wish-list">
-    @for (wish of VisibleSignalItems(); track wish.wishText) {
-    <app-wish-list-item [item]="wish"></app-wish-list-item>
-    }
-  </ul>
-</ng-template> -->
