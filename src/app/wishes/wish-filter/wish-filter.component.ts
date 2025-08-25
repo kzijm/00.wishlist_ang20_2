@@ -1,7 +1,7 @@
 import { Component, Input, Signal } from '@angular/core';
-import { ListFilter } from '../shared/filters';
-import { WishStateSignalService } from '../wish-state-signal.service';
-import { WishStateService } from '../wish-state.service';
+import { ListFilter } from '../../shared/filters';
+import { WishStateSignalService } from '../services/wish-state-signal.service';
+import { WishStateService } from '../services/wish-state.service';
 import { Observable } from 'rxjs';
 
 @Component({

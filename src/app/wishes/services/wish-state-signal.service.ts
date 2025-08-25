@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { WishItem } from './shared/models/wishItem';
-import { SimpleSignalStoreService } from './shared/services/simple-signal-store.service';
-import { ListFilter } from './shared/filters';
+import { WishItem } from '../model/wishItem';
+import { SimpleSignalStoreService } from '../../shared/services/simple-signal-store.service';
+import { ListFilter } from '../../shared/filters';
 
 export interface WishStateSignal {
   items: WishItem[];

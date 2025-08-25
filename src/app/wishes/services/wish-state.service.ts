@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { WishItem } from './shared/models/wishItem';
-import { SimpleStoreService } from './shared/services/simple-store.service';
+import { WishItem } from '../model/wishItem';
+import { SimpleStoreService } from '../../shared/services/simple-store.service';
 import { map, Observable, switchMap, tap } from 'rxjs';
-import { WishService } from './shared/services/wish.service';
+import { WishService } from './wish.service';
 
-import { ListFilter } from './shared/filters';
+import { ListFilter } from '../../shared/filters';
 
 export interface WishState {
   items: WishItem[];
@@ -17,7 +17,7 @@ export interface WishState {
 // inject in the app.component
 // @Injectable()
 export class WishStateService extends SimpleStoreService<WishState> {
-  constructor(private wishService: WishService) {
+  constructor() {
     super();
 
     const initialState = {
@@ -45,9 +45,9 @@ export class WishStateService extends SimpleStoreService<WishState> {
             } else {
               return items.filter((item) => item.isComplete);
             }
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -81,13 +81,13 @@ export class WishStateService extends SimpleStoreService<WishState> {
   }
 
   // READ
-  loadWishes() {
-    this.wishService.getWishes().subscribe((wishes: WishItem[]) => {
-      this.set('items', wishes);
-    });
-    (error: any) => {
-      console.error('Error loading wishes:', error);
-      // Handle the error appropriately, e.g., show a notification
-    };
-  }
+  // loadWishes() {
+  //   this.wishService.getWishes$({}).subscribe((wishes: WishItem[]) => {
+  //     this.set('items', wishes);
+  //   });
+  //   (error: any) => {
+  //     console.error('Error loading wishes:', error);
+  //     // Handle the error appropriately, e.g., show a notification
+  //   };
+  // }
 }

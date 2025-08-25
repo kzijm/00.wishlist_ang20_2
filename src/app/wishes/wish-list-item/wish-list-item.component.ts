@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { WishStateSignalService } from '../wish-state-signal.service';
-import { WishItem } from '../shared/models/wishItem';
-import { WishStateService } from '../wish-state.service';
+import { WishStateSignalService } from '../services/wish-state-signal.service';
+import { WishItem } from '../model/wishItem';
+import { WishStateService } from '../services/wish-state.service';
 
 @Component({
   selector: 'app-wish-list-item',

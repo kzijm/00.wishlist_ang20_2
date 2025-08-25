@@ -1,8 +1,8 @@
 import { Component, computed, Input, OnInit, Signal } from '@angular/core';
-import { WishItem } from '../shared/models/wishItem';
-import { ListFilter } from '../shared/filters';
-import { WishStateSignalService } from '../wish-state-signal.service';
-import { WishStateService } from '../wish-state.service';
+import { WishItem } from '../model/wishItem';
+import { ListFilter } from '../../shared/filters';
+import { WishStateSignalService } from '../services/wish-state-signal.service';
+import { WishStateService } from '../services/wish-state.service';
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

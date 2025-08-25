@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row mt-4 gx-3 gx-lg-5">
+    <h4>Treasures from user{{ userId }}</h4>
+    <h5>Filtered by: {{ treasuresFilter }}</h5>
+    <ul>
+      @if (treasuresLoading()) {
+        loading!!
+      } @else if (treasuresError()) {
+        {{ treasuresError() }}
+      } @else {
+        @for (treasure of treasures(); track treasure.id) {
+          <li>
+            {{ treasure.name }}
+            <button type="button" (click)="deleteTreasure(treasure.id!)">
+              Delete
+            </button>
+          </li>
+        }
+      }
+    </ul>
+
+    <form class="form" [formGroup]="treasureForm" (ngSubmit)="addTreasure()">
+      <label for="name">Name: </label>
+      <input
+        class="form-control"
+        id="name"
+        type="text"
+        [formControl]="treasureForm.controls.name"
+      />
+      <label for="description">Description: </label>
+      <input
+        class="form-control"
+        id="description"
+        type="text"
+        [formControl]="treasureForm.controls.description"
+      />
+      <label for="value">Value: </label>
+      <input
+        class="form-control"
+        id="value"
+        type="number"
+        [formControl]="treasureForm.controls.value"
+      />
+      <label for="coolFactor">CoolFactor: </label>
+      <input
+        class="form-control"
+        id="coolFactor"
+        type="number"
+        [formControl]="treasureForm.controls.coolFactor"
+      />
+      <label for="relation">Relation: </label>
+      <input
+        class="form-control"
+        id="relation"
+        type="string"
+        [formControl]="treasureForm.controls.relation"
+      />
+      <button type="submit" [disabled]="!treasureForm.valid">Submit</button>
+    </form>
+    <!-- <button type="button" (click)="addTreasure()">Add treasure</button> -->
+  </div>
+</div>

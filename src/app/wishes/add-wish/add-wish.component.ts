@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { WishStateService } from '../wish-state.service';
-import { WishStateSignalService } from '../wish-state-signal.service';
-import { WishItem } from '../shared/models/wishItem';
+import { WishStateService } from '../services/wish-state.service';
+import { WishStateSignalService } from '../services/wish-state-signal.service';
+import { WishItem } from '../model/wishItem';
 
 @Component({
   selector: 'app-add-wish',
@@ -17,7 +17,7 @@ export class AddWishComponent {
 
   constructor(
     private wishStateService: WishStateService,
-    private wishStateSignalService: WishStateSignalService
+    private wishStateSignalService: WishStateSignalService,
   ) {}
 
   addNewWish() {
