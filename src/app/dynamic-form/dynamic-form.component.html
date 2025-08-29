@@ -1,0 +1,21 @@
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form()">
+    @for (question of questions(); track question) {
+      <div class="form-row">
+        <app-question [question]="question" [form]="form()" />
+      </div>
+    }
+    <div class="form-row mt-3">
+      <!-- <button type="button" (click)="addField()">Add Field</button> -->
+    </div>
+
+    <div class="form-row mt-3">
+      <button type="submit" [disabled]="!form().valid">Save</button>
+    </div>
+  </form>
+  @if (payLoad) {
+    <div class="form-row">
+      <strong>Saved the following values</strong><br />{{ payLoad }}
+    </div>
+  }
+</div>

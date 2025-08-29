@@ -1,0 +1,66 @@
+<form class="quizForm" [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+  <h1>Quiz form</h1>
+  <div formArrayName="questions">
+    @for (
+      question of questions.controls;
+      track question;
+      let questionIndex = $index
+    ) {
+      <div class="form-group question" [formGroupName]="questionIndex">
+        <input
+          class=""
+          type="text"
+          formControlName="questionName"
+          placeholder="Question name"
+        />
+        <span (click)="removeQuestion(questionIndex)" class="remove">✗</span>
+        <div formArrayName="answers" class="answers">
+          <div>Answers</div>
+          @for (
+            answer of question?.controls?.answers?.controls;
+            track answer;
+            let answerIndex = $index
+          ) {
+            <div
+              [formGroupName]="answerIndex"
+              class="answer d-flex position-relative"
+            >
+              <input
+                class="ps-4 flex-grow-1"
+                style="min-width: 0"
+                type="text"
+                placeholder="Answer"
+                formControlName="text"
+              />
+
+              <input
+                class="position-absolute ms-2 start-0 translate-middle-y top-50"
+                type="radio"
+                name="rightAnswer-{{ questionIndex }}{{ answerIndex }}"
+                [checked]="answer?.controls?.isRightAnswer?.value === 1"
+                (click)="setRightAnswer(questionIndex, answerIndex)"
+              />
+
+              <span
+                (click)="removeAnswer(questionIndex, answerIndex)"
+                class="remove"
+                >✗</span
+              >
+            </div>
+          }
+          <button
+            type="button"
+            class="add-answer"
+            (click)="addAnswer(questionIndex)"
+          >
+            Add Answer
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+  <div class="add-question">
+    <button (click)="addQuestion()" type="button">Add Question</button>
+  </div>
+  <div><button type="submit">Submit</button></div>
+</form>

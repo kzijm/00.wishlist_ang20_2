@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row mt-4 gx-3 gx-lg-5">
+    <form [formGroup]="dynamicForm" (ngSubmit)="submitForm()">
+      <div>
+        <label>Name:</label>
+        <input formControlName="name" />
+      </div>
+
+      <div>
+        <label>Email:</label>
+        <input formControlName="email" />
+      </div>
+
+      <div formArrayName="fields">
+        @for (field of fields.controls; let i = $index; track field) {
+          <div [formGroupName]="i">
+            <label>
+              Label:
+              <input formControlName="label" />
+            </label>
+            <label>
+              Value:
+              <input formControlName="value" />
+            </label>
+            <button type="button" (click)="removeField(i)">Remove</button>
+          </div>
+        }
+      </div>
+
+      <button type="button" (click)="addField()">Add Field</button>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div class="row mt-4 gx-3 gx-lg-5">
+    {{ payload }}
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { WishesComponent } from './wishes/wishes.component';
 import { TreasuresComponent } from './treasures/treasures.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { HomeComponent } from './home/home.component';
+import { DynamicFormSimpleComponent } from './dynamic-form-simple/dynamic-form-simple.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HomeComponent } from './home/home.component';
     TreasuresComponent,
     NotfoundComponent,
     HomeComponent,
+    DynamicFormSimpleComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [provideHttpClient()],
